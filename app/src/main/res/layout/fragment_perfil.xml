@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cardview_shadow_end_color"
+    tools:context=".fragment.PerfilFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:cardCornerRadius="70dp"
+            >
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivFotoPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/cangrejo"
+                android:background="@color/cardview_light_background">
+
+            </androidx.appcompat.widget.AppCompatImageView>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/ivNombreFotoPrincipal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cangrejo"
+            android:textAlignment="center"
+            android:textColor="#3C3F41"
+            android:textSize="@dimen/nombre_contacto">
+
+        </TextView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:paddingVertical="@dimen/margin_top"
+            android:id="@+id/rvMascotasGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/elevacion_drawaer">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</FrameLayout>
