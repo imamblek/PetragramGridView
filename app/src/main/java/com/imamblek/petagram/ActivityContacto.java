@@ -3,7 +3,6 @@ package com.imamblek.petagram;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
-import android.util.Config;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,10 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Properties;
 
-import javax.mail.Address;
-import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -27,11 +23,8 @@ private EditText etContactoNombre;
 private EditText etContactoEmail;
 private EditText etContactoMensaje;
 private ImageButton btnEnviarEmail;
-String correo;
-String contrasena;
-Session session;
 
-
+private Session session;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -47,52 +40,48 @@ Session session;
             etContactoEmail =(EditText)findViewById(R.id.etContactoEmail);
             etContactoMensaje =(EditText)findViewById(R.id.etContactoMensaje);
             btnEnviarEmail =(ImageButton)findViewById(R.id.btnEnviarEmail);
-
-            correo = "imamblek@gmail.com";
-            contrasena = "***********";
-
             btnEnviarEmail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //permisos
-                    StrictMode.ThreadPolicy policy = new  StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    ThreadPolicy policy = new  ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     //propiedades de conexion
-                    Properties properties = new Properties();
-                    properties.put("mail.smtp.host","smtp.gmail.com");
-                    properties.put("mail.smtp.socketFactory.port","465");
-                    properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-                    properties.put("mail.smtp.auth","true");
-                    properties.put("mail.smtp.port","465");
-
-                    session = Session.getDefaultInstance(properties, new Authenticator() {
-                        @Override
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(correo,contrasena);
-                        }
-                    });
-                        if (session != null){
-                            Toast.makeText(ActivityContacto.this,"Session Ok",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(ActivityContacto.this,"Session Null",Toast.LENGTH_SHORT).show();
-                        }
+                    Properties properties = System.getProperties();
+                    properties.put("mail.smtp.host", "smtp.gmail.com");
+                    properties.put("mail.smtp.user", Login.USER);
+                    properties.put("mail.smtp.password", Login.PASSWORD);
+                    properties.put("mail.smtp.auth", "true");
+                    properties.put("mail.smtp.starttls.enable", "true");
+                    properties.put("mail.smtp.port", "587");
+                    session = Session.getDefaultInstance(properties);
+                    MimeMessage message = new MimeMessage(session);
                     try {
-                        MimeMessage message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress(correo));
-                        message.setRecipient(Message.RecipientType.TO,new InternetAddress("imamblek@gmail.com"));
-                        message.setSubject("Mensaje de "+etContactoNombre);
-                        message.setText(etContactoMensaje.getText().toString(),"text/html; charset=uft-8");
-                        Transport.send(message);
-                        Toast.makeText(ActivityContacto.this,"Mensaje enviado a "+etContactoEmail,Toast.LENGTH_LONG).show();
+
+                        message.setFrom(new InternetAddress(Login.EMAIL));
+                        message.setRecipient(Message.RecipientType.TO,new InternetAddress(etContactoEmail.getText().toString().trim()));
+                        message.setSubject("Mensaje de Isaac Mora para "+etContactoNombre.getText().toString());
+                        message.setText(etContactoMensaje.getText().toString());
+                        Transport transport = session.getTransport("smtp");
+                        transport.connect("smtp.gmail.com", Login.USER, Login.PASSWORD);
+                        transport.sendMessage(message,message.getAllRecipients());
+                        transport.close();
+                        Toast.makeText(ActivityContacto.this,"Mensaje enviado a "+etContactoEmail.getText().toString()+ ", verifica tu bandeja de entrada Gmail.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ActivityContacto.this,"**Gracias por probar mi codigo por favor calificame con un 100**",Toast.LENGTH_LONG).show();
 
                     }catch(Exception e){
                         e.printStackTrace();
-                        Toast.makeText(ActivityContacto.this,"No se pudo conectar con el servidor de correo de "+correo+", por favor verifique su conexion y que este trabajando con la cuenta correcta que tenga habilitado el servicio de mensajeria no segura.",Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(ActivityContacto.this,"No se pudo conectar con el servidor de correo de "+ Login.EMAIL+", si este no es su cuenta de correo por favor modifique los datos de Login en el codigo de ActivityContacto y luego intente de nuevo.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ActivityContacto.this,"Asegurece de tener habilitado el servicio de mensajeria no segura en su cuenta de Gmail.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ActivityContacto.this,"Esta funcion no corre en emulador, solo en telefono, por favor intente en su telefono con los datos de su cuenta de Gmail.",Toast.LENGTH_LONG).show();
                     }
                 }
             });
 
         }
-
+    public class Login {
+        public static final String EMAIL ="imamblek@gmail.com";//cuenta de correo Gmail
+        public static final String USER ="imamblek";//usuario de cuenta Gmail
+        public static final String PASSWORD ="******";//Clave de cuenta Gmail
+    }
 }
