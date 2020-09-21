@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.imamblek.petagram">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:label="Petagram">
-        <activity android:name="com.imamblek.petagram.ActivityContacto"></activity>
-        <activity android:name="com.imamblek.petagram.ActivityAcercade" />
+        <activity android:name="com.imamblek.petagram.ActivityContacto"
+            android:parentActivityName="com.imamblek.petagram.MainActivity">
+
+        </activity>
+        <activity android:name="com.imamblek.petagram.ActivityAcercade"
+            android:parentActivityName="com.imamblek.petagram.MainActivity">
+
+        </activity>
         <activity
             android:name="com.imamblek.petagram.MainActivity"
 
@@ -26,7 +32,6 @@
         </activity>
         <activity
             android:name="com.imamblek.petagram.DetalleMascota"
-
             android:parentActivityName="com.imamblek.petagram.MainActivity" />
     </application>
 

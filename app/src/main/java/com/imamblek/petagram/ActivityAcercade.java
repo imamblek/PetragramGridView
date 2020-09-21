@@ -10,5 +10,11 @@ public class ActivityAcercade extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acercade);
+        androidx.appcompat.widget.Toolbar miActionBar = findViewById(R.id.miActionBar2);
+        setSupportActionBar(miActionBar);
+
+
+        // para activar el boton de regreso.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

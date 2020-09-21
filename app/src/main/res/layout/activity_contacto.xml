@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ActivityContacto">
 
+    <include android:id="@+id/miActionBar2"
+        layout="@layout/actionbar"
+        >
+    </include>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -13,7 +18,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/miActionBar2">
 
         <EditText
             android:id="@+id/etContactoNombre"
@@ -55,7 +60,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.080">
+        app:layout_constraintVertical_bias="0.080"
+        android:contentDescription="@string/todo">
 
     </ImageButton>
 

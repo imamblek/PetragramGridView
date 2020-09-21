@@ -12,22 +12,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <androidx.cardview.widget.CardView
-            android:layout_gravity="center_horizontal"
-            android:layout_width="150dp"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/ivFotoPrincipal"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:cardCornerRadius="70dp"
-            >
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivFotoPrincipal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/cangrejo"
-                android:background="@color/cardview_light_background">
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cangrejo"
 
-            </androidx.appcompat.widget.AppCompatImageView>
-        </androidx.cardview.widget.CardView>
+            app:civ_border_color="#3f51b5"
+            app:civ_border_width="6dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#3f51b5"
+            app:civ_shadow_radius="10dp"
+            >
+
+        </com.mikhaellopez.circularimageview.CircularImageView>
 
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Cangrejo"
             android:textAlignment="center"
-            android:textColor="#3C3F41"
+            android:textColor="#FFFFFF"
             android:textSize="@dimen/nombre_contacto">
 
         </TextView>
